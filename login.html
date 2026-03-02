@@ -6,40 +6,89 @@
   <title>Rekruit — Login</title>
   <link rel="stylesheet" href="css/app.css" />
 </head>
+
 <body>
   <div class="center">
     <div class="split">
+
       <div class="card hero">
         <div class="brand"><span class="dot"></span> Rekruit</div>
         <h2 style="margin-top:14px;">A complete recruiting workspace.</h2>
         <p>Track jobs, manage candidate data, move pipelines, and keep recruiter notes in one system.</p>
+
+        <ul>
+          <li>Long-term talent pool database</li>
+          <li>Live job links (no email applications)</li>
+          <li>Drag & drop pipeline stages</li>
+          <li>POPIA-ready audit trails & access control</li>
+        </ul>
+
+        <div style="margin-top:16px;">
+          <small>
+            Need to create a new workspace? <a class="link" href="signup.html">Create account</a>
+          </small>
+        </div>
       </div>
 
-      <form class="card form" data-login-form>
+      <form class="card form" data-login-form="true" method="post" novalidate>
         <h1>Sign in</h1>
         <p>Use your recruiter account to continue.</p>
 
         <div class="field">
-          <label>Email</label>
-          <input class="input" required name="email" type="email" placeholder="name@company.co.za" />
+          <label for="email">Email</label>
+          <input
+            id="email"
+            class="input"
+            name="email"
+            type="email"
+            inputmode="email"
+            autocomplete="email"
+            placeholder="name@company.co.za"
+            required
+          />
         </div>
 
         <div class="field">
-          <label>Password</label>
-          <input class="input" required name="password" type="password" placeholder="••••••••" />
+          <label for="password">Password</label>
+          <input
+            id="password"
+            class="input"
+            name="password"
+            type="password"
+            autocomplete="current-password"
+            placeholder="••••••••"
+            required
+          />
         </div>
+
+        <div class="row" style="justify-content:space-between; align-items:center; margin-top:6px;">
+          <label class="row" style="gap:8px; align-items:center;">
+            <input type="checkbox" name="remember" />
+            <small>Remember me</small>
+          </label>
+
+          <a class="link" href="#" onclick="return false;" data-forgot-password>
+            Forgot password?
+          </a>
+        </div>
+
+        <!-- Optional message areas for JS -->
+        <div class="msg error" data-error style="display:none;"></div>
+        <div class="msg ok" data-ok style="display:none;"></div>
 
         <div class="actions">
           <button class="btn primary" type="submit">Login</button>
-<<<<<<< codex/deploy-recruit-hr-site-with-basic-functionality-ootrbk
           <a class="btn" href="signup.html">Create account</a>
-=======
->>>>>>> main
         </div>
+
+        <small style="display:block; margin-top:10px;">
+          By signing in you agree to workspace policies and POPIA data handling requirements.
+        </small>
       </form>
+
     </div>
   </div>
 
-  <script src="js/app.js"></script>
+  <script defer src="js/app.js"></script>
 </body>
 </html>

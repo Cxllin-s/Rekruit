@@ -6,6 +6,7 @@
   <title>Rekruit — Sign Up</title>
   <link rel="stylesheet" href="css/app.css" />
 </head>
+
 <body>
   <div class="center">
     <div class="split">
@@ -13,51 +14,132 @@
         <div class="brand"><span class="dot"></span> Rekruit</div>
         <h2 style="margin-top:14px;">Create your recruiter workspace account.</h2>
         <p>Set up your organization and start managing companies, jobs, applications, and placements.</p>
+
+        <ul>
+          <li>Workspace setup (company/agency)</li>
+          <li>Role-based access (recruiter vs hiring manager)</li>
+          <li>Live job links + application inbox</li>
+          <li>POPIA-ready structure (audit + consent later)</li>
+        </ul>
       </div>
 
-      <form class="card form" data-signup-form>
+      <form class="card form" data-signup-form method="post" novalidate>
         <h1>Create account</h1>
         <p>Sign up to access the ATS dashboard.</p>
 
-        <div class="field">
-          <label>Full Name</label>
-          <input class="input" required name="name" type="text" placeholder="Your name" />
+        <div class="grid grid-2">
+          <div class="field">
+            <label for="su-name">Full Name</label>
+            <input
+              id="su-name"
+              class="input"
+              required
+              name="name"
+              type="text"
+              placeholder="Your name"
+              autocomplete="name"
+            />
+          </div>
+
+          <div class="field">
+            <label for="su-email">Email</label>
+            <input
+              id="su-email"
+              class="input"
+              required
+              name="email"
+              type="email"
+              inputmode="email"
+              placeholder="name@company.co.za"
+              autocomplete="email"
+            />
+          </div>
+        </div>
+
+        <div class="grid grid-2">
+          <div class="field">
+            <label for="su-company">Company / Agency Name</label>
+            <input
+              id="su-company"
+              class="input"
+              required
+              name="company"
+              type="text"
+              placeholder="e.g. Rekruit Talent (Pty) Ltd"
+              autocomplete="organization"
+            />
+            <small>Used to create your workspace.</small>
+          </div>
+
+          <div class="field">
+            <label for="su-role">Role</label>
+            <select id="su-role" class="input" name="role" required>
+              <option>Super Admin</option>
+              <option>Company Admin</option>
+              <option>Recruiter</option>
+              <option>Hiring Manager</option>
+              <option>Finance / HR</option>
+            </select>
+            <small>You can add more users later.</small>
+          </div>
+        </div>
+
+        <div class="grid grid-2">
+          <div class="field">
+            <label for="su-password">Password</label>
+            <input
+              id="su-password"
+              class="input"
+              required
+              name="password"
+              type="password"
+              placeholder="At least 8 characters"
+              autocomplete="new-password"
+              minlength="8"
+            />
+          </div>
+
+          <div class="field">
+            <label for="su-confirm">Confirm Password</label>
+            <input
+              id="su-confirm"
+              class="input"
+              required
+              name="confirmPassword"
+              type="password"
+              placeholder="Repeat password"
+              autocomplete="new-password"
+              minlength="8"
+            />
+          </div>
         </div>
 
         <div class="field">
-          <label>Email</label>
-          <input class="input" required name="email" type="email" placeholder="name@company.co.za" />
+          <label class="row" style="align-items:flex-start; gap:10px;">
+            <input type="checkbox" required name="agree" style="margin-top:4px;">
+            <span>
+              I agree to the <a class="link" href="#" onclick="return false;">Terms</a> and confirm I have a lawful basis to store candidate data (POPIA).
+              <br><small>Full policy controls will be available in Settings.</small>
+            </span>
+          </label>
         </div>
 
-        <div class="field">
-          <label>Role</label>
-          <select class="input" name="role">
-            <option>Super Admin</option>
-            <option>Company Admin</option>
-            <option>Recruiter</option>
-            <option>Hiring Manager</option>
-            <option>Finance / HR</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label>Password</label>
-          <input class="input" required name="password" type="password" placeholder="At least 6 characters" />
-        </div>
-
-        <div class="field">
-          <label>Confirm Password</label>
-          <input class="input" required name="confirmPassword" type="password" placeholder="Repeat password" />
-        </div>
+        <!-- Optional message areas for JS -->
+        <div class="msg error" data-error style="display:none;"></div>
+        <div class="msg ok" data-ok style="display:none;"></div>
 
         <div class="actions">
-          <button class="btn primary" type="submit">Sign Up</button>
+          <button class="btn primary" type="submit">Create Workspace</button>
           <a class="btn" href="login.html">Back to Login</a>
         </div>
+
+        <small style="display:block; margin-top:10px;">
+          Already have a workspace? <a class="link" href="login.html">Sign in</a>.
+        </small>
       </form>
     </div>
   </div>
 
-  <script src="js/app.js"></script>
+  <script defer src="js/app.js"></script>
 </body>
 </html>

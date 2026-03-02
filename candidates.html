@@ -6,6 +6,7 @@
   <title>Rekruit — Candidates</title>
   <link rel="stylesheet" href="css/app.css" />
 </head>
+
 <body>
   <div class="topbar">
     <div class="nav">
@@ -20,12 +21,6 @@
         <a class="chip" data-nav href="reports.html">Reports</a>
         <a class="chip" data-nav href="settings.html">Settings</a>
         <a class="chip" href="#" data-logout>Logout</a>
-<<<<<<< codex/deploy-recruit-hr-site-with-basic-functionality-ootrbk
-=======
-        <a class="chip" data-nav href="candidates.html">Candidates</a>
-        <a class="chip" data-nav href="jobs-pipeline.html">Jobs Pipeline</a>
-        <a class="chip" data-nav href="login.html">Logout</a>
->>>>>>> main
       </div>
     </div>
   </div>
@@ -34,38 +29,92 @@
     <div class="section-title">
       <div>
         <h2>Candidate Database</h2>
-        <p>Create and maintain your real candidate records.</p>
+        <p>Store candidates long-term, track compliance, and build talent pools.</p>
       </div>
-      <input class="input" style="max-width:360px" data-candidate-search placeholder="Search candidates..." />
-<<<<<<< codex/deploy-recruit-hr-site-with-basic-functionality-ootrbk
-=======
-        <p>Add, update stage, and remove candidates.</p>
+      <div class="row" style="gap:10px; flex-wrap:wrap; justify-content:flex-end;">
+        <input class="input" style="max-width:320px" data-candidate-search placeholder="Search name, email, skills, ID/passport…" />
+        <button class="btn" type="button" data-toggle-filters>Filters</button>
+        <a class="btn" href="jobs-pipeline.html">Open Pipeline</a>
       </div>
->>>>>>> main
     </div>
 
-    <form class="card form" data-candidate-form>
-      <div class="grid grid-3">
-        <div class="field"><label>Full name</label><input class="input" required name="name" /></div>
-        <div class="field"><label>Email</label><input class="input" required name="email" type="email" /></div>
-        <div class="field"><label>Phone</label><input class="input" name="phone" /></div>
-      </div>
-      <div class="grid grid-3">
-        <div class="field"><label>Location</label><input class="input" required name="location" /></div>
-        <div class="field"><label>Stage</label><select class="input" name="stage"><option>Applied</option><option>Screened</option><option>Interview</option><option>Offer</option><option>Placed</option><option>Rejected</option></select></div>
-        <div class="field"><label>Job assignment</label><select class="input" data-candidate-job name="jobId"></select></div>
-      </div>
-      <div class="grid grid-2">
-        <div class="field"><label>Skills</label><input class="input" name="skills" /></div>
-        <div class="field"><label>Notes</label><input class="input" name="notes" /></div>
-      </div>
-      <div class="actions"><button class="btn primary" type="submit">Add Candidate</button></div>
-    </form>
+    <!-- Advanced Filters (UI-first, wired next) -->
+    <div class="card form hidden" data-filters-panel>
+      <h1>Advanced Search Filters</h1>
+      <p>Filter by key recruiter criteria (skills, location, salary, availability, tags, last contact).</p>
 
-    <table class="table" style="margin-top:16px">
-      <thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Location</th><th>Stage</th><th>Job</th><th>Skills</th><th></th></tr></thead>
-<<<<<<< codex/deploy-recruit-hr-site-with-basic-functionality-ootrbk
-=======
+      <div class="grid grid-3">
+        <div class="field">
+          <label>Location</label>
+          <input class="input" name="filterLocation" placeholder="e.g. Cape Town, Gauteng, Remote" />
+        </div>
+        <div class="field">
+          <label>Industry</label>
+          <input class="input" name="filterIndustry" placeholder="e.g. Finance, Mining, Logistics" />
+        </div>
+        <div class="field">
+          <label>Skills (contains)</label>
+          <input class="input" name="filterSkills" placeholder="e.g. IFRS, Java, Payroll" />
+        </div>
+      </div>
+
+      <div class="grid grid-3">
+        <div class="field">
+          <label>Salary Min (ZAR)</label>
+          <input class="input" name="filterSalaryMin" placeholder="e.g. 25000" />
+        </div>
+        <div class="field">
+          <label>Salary Max (ZAR)</label>
+          <input class="input" name="filterSalaryMax" placeholder="e.g. 60000" />
+        </div>
+        <div class="field">
+          <label>Availability</label>
+          <select class="input" name="filterAvailability">
+            <option value="">Any</option>
+            <option>Immediately</option>
+            <option>2 weeks</option>
+            <option>1 month</option>
+            <option>Negotiable</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="grid grid-3">
+        <div class="field">
+          <label>Tag (contains)</label>
+          <input class="input" name="filterTag" placeholder="e.g. CFO, Mining, React" />
+        </div>
+        <div class="field">
+          <label>Talent Pool</label>
+          <input class="input" name="filterPool" placeholder="e.g. Finance - Cape Town" />
+        </div>
+        <div class="field">
+          <label>Last contact (days)</label>
+          <input class="input" name="filterLastContact" placeholder="e.g. 30" />
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn primary" type="button" data-apply-filters>Apply Filters</button>
+        <button class="btn" type="button" data-clear-filters>Clear</button>
+      </div>
+
+      <small class="footer-note">
+        Filters will become fully query-driven once connected to Amanani HR backend. UI is already structured for it.
+      </small>
+    </div>
+
+    <!-- Create Candidate (FULL PROFILE) -->
+    <form class="card form" data-candidate-form>
+      <h1>Create Candidate</h1>
+      <p>Capture full SA-ready profile: identity, right-to-work, EE/BEE (optional), skills, experience, salary, and attachments.</p>
+
+      <!-- Personal / Contact -->
+      <div class="section-title" style="margin-top:8px;">
+        <div><h2>Personal & Contact</h2><p>Core identity + contact details</p></div>
+      </div>
+
+      <div class="grid grid-3">
         <div class="field">
           <label>Full name</label>
           <input class="input" required name="name" placeholder="Nthabiseng Mokoena" />
@@ -75,48 +124,260 @@
           <input class="input" required name="email" type="email" placeholder="candidate@email.com" />
         </div>
         <div class="field">
-          <label>Location</label>
-          <input class="input" required name="location" placeholder="Cape Town" />
+          <label>Phone</label>
+          <input class="input" name="phone" placeholder="+27..." />
         </div>
       </div>
+
+      <div class="grid grid-3">
+        <div class="field">
+          <label>Location (Province/City/Remote)</label>
+          <input class="input" required name="location" placeholder="Cape Town / Gauteng / Remote" />
+        </div>
+        <div class="field">
+          <label>ID / Passport (SA specific)</label>
+          <input class="input" name="idPassport" placeholder="13-digit SA ID or passport" />
+        </div>
+        <div class="field">
+          <label>Nationality</label>
+          <input class="input" name="nationality" placeholder="South African / Zimbabwean / etc." />
+        </div>
+      </div>
+
+      <div class="grid grid-3">
+        <div class="field">
+          <label>Work permit status</label>
+          <select class="input" name="workPermit">
+            <option value="">Select</option>
+            <option>Citizen / Permanent Resident</option>
+            <option>Work Permit Valid</option>
+            <option>Work Permit Pending</option>
+            <option>No Work Permit</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Preferred contact method</label>
+          <select class="input" name="contactMethod">
+            <option>Email</option>
+            <option>Phone</option>
+            <option>WhatsApp</option>
+            <option>LinkedIn</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>LinkedIn / Portfolio link</label>
+          <input class="input" name="profileLink" placeholder="https://linkedin.com/in/..." />
+        </div>
+      </div>
+
+      <!-- Professional -->
+      <div class="section-title" style="margin-top:12px;">
+        <div><h2>Professional Profile</h2><p>Role, experience, salary, availability, skills</p></div>
+      </div>
+
+      <div class="grid grid-3">
+        <div class="field">
+          <label>Current role / title</label>
+          <input class="input" name="currentRole" placeholder="e.g. Senior Accountant" />
+        </div>
+        <div class="field">
+          <label>Years of experience</label>
+          <input class="input" name="yearsExperience" placeholder="e.g. 5" />
+        </div>
+        <div class="field">
+          <label>Industry</label>
+          <input class="input" name="industry" placeholder="e.g. Finance, Mining, Logistics" />
+        </div>
+      </div>
+
+      <div class="grid grid-3">
+        <div class="field">
+          <label>Salary expectation (ZAR)</label>
+          <input class="input" name="salaryExpectation" placeholder="e.g. 45000" />
+        </div>
+        <div class="field">
+          <label>Availability</label>
+          <select class="input" name="availability">
+            <option value="">Select</option>
+            <option>Immediately</option>
+            <option>2 weeks</option>
+            <option>1 month</option>
+            <option>Negotiable</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Notice period</label>
+          <select class="input" name="noticePeriod">
+            <option value="">Select</option>
+            <option>None</option>
+            <option>1 week</option>
+            <option>2 weeks</option>
+            <option>1 month</option>
+            <option>2 months</option>
+            <option>3 months</option>
+          </select>
+        </div>
+      </div>
+
       <div class="grid grid-2">
+        <div class="field">
+          <label>Skills (comma-separated / tags)</label>
+          <input class="input" name="skills" placeholder="Excel, IFRS, Payroll, Sage" />
+          <small>Will be tag-based + searchable in the full system.</small>
+        </div>
+        <div class="field">
+          <label>Candidate tags (comma-separated)</label>
+          <input class="input" name="tags" placeholder="CFO, Mining, Java, BPO" />
+          <small>Used for rediscovery + talent pools.</small>
+        </div>
+      </div>
+
+      <!-- ATS Stage + Job assignment -->
+      <div class="section-title" style="margin-top:12px;">
+        <div><h2>ATS & Assignment</h2><p>Pipeline stage + job link</p></div>
+      </div>
+
+      <div class="grid grid-3">
         <div class="field">
           <label>Stage</label>
           <select class="input" name="stage">
             <option>Applied</option>
             <option>Screened</option>
-            <option>Interview</option>
+            <option>Interview 1</option>
+            <option>Interview 2</option>
             <option>Offer</option>
             <option>Placed</option>
             <option>Rejected</option>
           </select>
         </div>
+
         <div class="field">
-          <label>Skills</label>
-          <input class="input" name="skills" placeholder="Excel, IFRS, Payroll" />
+          <label>Job assignment</label>
+          <select class="input" data-candidate-job name="jobId"></select>
+        </div>
+
+        <div class="field">
+          <label>Talent pool</label>
+          <input class="input" name="talentPool" placeholder="e.g. Finance - Cape Town" />
         </div>
       </div>
-      <div class="actions">
-        <button class="btn primary" type="submit">Add Candidate</button>
+
+      <!-- Compliance (Optional + POPIA-safe) -->
+      <div class="section-title" style="margin-top:12px;">
+        <div><h2>Compliance (Optional)</h2><p>Only capture if relevant and lawful (POPIA)</p></div>
       </div>
+
+      <div class="grid grid-3">
+        <div class="field">
+          <label>BEE status (optional)</label>
+          <select class="input" name="beeStatus">
+            <option value="">Select</option>
+            <option>Not provided</option>
+            <option>Black Owned</option>
+            <option>Majority Black Owned</option>
+            <option>Non-compliant</option>
+            <option>Exempt</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Employment Equity category (optional)</label>
+          <select class="input" name="eeCategory">
+            <option value="">Select</option>
+            <option>Not provided</option>
+            <option>African</option>
+            <option>Coloured</option>
+            <option>Indian</option>
+            <option>White</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Right-to-work docs (status)</label>
+          <select class="input" name="rtwStatus">
+            <option value="">Select</option>
+            <option>Required</option>
+            <option>Collected</option>
+            <option>Verified</option>
+            <option>Expired</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>POPIA consent note (internal)</label>
+        <input class="input" name="consentNote" placeholder="e.g. Candidate consented to data storage on 2026-03-02" />
+        <small>In the full system this becomes a consent record + audit event.</small>
+      </div>
+
+      <!-- Attachments -->
+      <div class="section-title" style="margin-top:12px;">
+        <div><h2>Attachments</h2><p>CVs, certificates, and supporting documents</p></div>
+      </div>
+
+      <div class="grid grid-2">
+        <div class="field">
+          <label>CV upload (PDF/Word)</label>
+          <input class="input" type="file" name="cvFile" accept=".pdf,.doc,.docx" />
+          <small>CV parsing will attach structured work history & education.</small>
+        </div>
+        <div class="field">
+          <label>Certificates (optional)</label>
+          <input class="input" type="file" name="certFiles" multiple accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" />
+          <small>Multiple uploads supported.</small>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Notes</label>
+        <input class="input" name="notes" placeholder="Short recruiter note…" />
+      </div>
+
+      <div class="actions">
+        <button class="btn primary" type="submit">Save Candidate</button>
+        <a class="btn" href="candidate-profile.html" onclick="return false;">Open Profile (after save)</a>
+      </div>
+
+      <small class="footer-note">
+        This page is designed for the full Amanani HR integration: multi-tenant, role-based access, audit logging, and compliance.
+      </small>
     </form>
 
-    <table class="table" style="margin-top:16px">
+    <div class="section-title">
+      <div>
+        <h2>Candidate List</h2>
+        <p>Update stages, assign jobs, and open full profiles.</p>
+      </div>
+    </div>
+
+    <table class="table" style="margin-top:10px">
       <thead>
         <tr>
           <th>Name</th>
           <th>Email</th>
+          <th>Phone</th>
           <th>Location</th>
           <th>Stage</th>
+          <th>Job</th>
           <th>Skills</th>
           <th></th>
         </tr>
       </thead>
->>>>>>> main
       <tbody data-candidates-body></tbody>
     </table>
   </div>
 
-  <script src="js/app.js"></script>
+  <script defer src="js/app.js"></script>
+  <script>
+    // UI-only toggles (kept tiny). Full filtering logic is wired in JS next.
+    (function(){
+      const btn = document.querySelector('[data-toggle-filters]');
+      const panel = document.querySelector('[data-filters-panel]');
+      if(btn && panel){
+        btn.addEventListener('click', ()=> panel.classList.toggle('hidden'));
+      }
+    })();
+  </script>
 </body>
 </html>
