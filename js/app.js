@@ -104,16 +104,27 @@ function findCredentialByEmail(email) {
 
 /** Auth **/
 function getAuth() {
-  try { return JSON.parse(localStorage.getItem(AUTH_STORAGE_KEY) || "null"); }
+  try {
+    const auth = JSON.parse(localStorage.getItem(AUTH_STORAGE_KEY) || "null");
+    if (!auth) return null;
+    if (auth.expiresAt && Date.now() > auth.expiresAt) {
+      clearAuth();
+      return null;
+    }
+    return auth;
+  }
   catch { return null; }
 }
-function setAuth({ email, tenantId, role, userId }) {
+function setAuth({ email, tenantId, role, userId, remember = false }) {
+  const sessionMs = remember ? 1000 * 60 * 60 * 24 * 30 : 1000 * 60 * 60 * 8;
   localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify({
     email,
     tenantId,
     role,
     userId,
-    loggedInAt: Date.now()
+    remember,
+    loggedInAt: Date.now(),
+    expiresAt: Date.now() + sessionMs
   }));
 }
 function clearAuth() {
@@ -180,6 +191,24 @@ function ensureTenant(data, tenantName) {
     box.style.display = msg ? "block" : "none";
   };
 
+  document.querySelector("[data-forgot-password]")?.addEventListener("click", (e) => {
+    e.preventDefault();
+    setMsg(errorBox, "");
+    const emailInput = form.querySelector('[name="email"]');
+    const email = String((emailInput && emailInput.value) || "").trim().toLowerCase();
+    if (!email) {
+      setMsg(errorBox, "Enter your email first, then click Forgot password.");
+      return;
+    }
+    const account = findCredentialByEmail(email);
+    if (!account) {
+      setMsg(errorBox, "No account found for this email. Please sign up.");
+      return;
+    }
+    setMsg(okBox, `Use your current password for ${email}. Password reset flow will be added with backend auth.`);
+    showFlash("Password reset is not yet enabled in this offline build.", "warn");
+  });
+
   form.addEventListener("submit", (e) => {
     e.preventDefault();
     setMsg(errorBox, "");
@@ -188,6 +217,7 @@ function ensureTenant(data, tenantName) {
     const fd = new FormData(form);
     const email = String(fd.get("email") || "").trim().toLowerCase();
     const password = String(fd.get("password") || "").trim();
+    const remember = String(fd.get("remember") || "") === "on";
 
     if (!email || !password) {
       showFlash("Please enter email and password.", "danger");
@@ -202,7 +232,7 @@ function ensureTenant(data, tenantName) {
       return;
     }
 
-    setAuth({ email: account.email, tenantId: account.tenantId, role: account.role, userId: account.userId });
+    setAuth({ email: account.email, tenantId: account.tenantId, role: account.role, userId: account.userId, remember });
     showFlash("Welcome back.", "ok");
     location.href = "dashboard.html";
   });
@@ -626,17 +656,30 @@ function getTenantDataOrRedirect() {
       tenantId,
       name,
       email,
-      phone: String(fd.get("phone") || ""),
-      location: String(fd.get("location") || ""),
-      stage: String(fd.get("stage") || "Applied"),
-      skills: String(fd.get("skills") || ""),
-      notes: String(fd.get("notes") || ""),
-      jobId: String(fd.get("jobId") || ""),
-      idPassport: "",
-      nationality: "",
-      workPermit: "",
-      beeStatus: "",
-      eeCategory: "",
+      phone: String(fd.get("phone") || "").trim(),
+      location: String(fd.get("location") || "").trim(),
+      stage: String(fd.get("stage") || "Applied").trim(),
+      skills: String(fd.get("skills") || "").trim(),
+      notes: String(fd.get("notes") || "").trim(),
+      jobId: String(fd.get("jobId") || "").trim(),
+      idPassport: String(fd.get("idPassport") || "").trim(),
+      nationality: String(fd.get("nationality") || "").trim(),
+      workPermit: String(fd.get("workPermit") || "").trim(),
+      beeStatus: String(fd.get("beeStatus") || "").trim(),
+      eeCategory: String(fd.get("eeCategory") || "").trim(),
+      noticePeriod: String(fd.get("noticePeriod") || "").trim(),
+      availability: String(fd.get("availability") || "").trim(),
+      salaryExpectation: String(fd.get("salaryExpectation") || "").trim(),
+      currentRole: String(fd.get("currentRole") || "").trim(),
+      yearsExperience: String(fd.get("yearsExperience") || "").trim(),
+      industry: String(fd.get("industry") || "").trim(),
+      contactMethod: String(fd.get("contactMethod") || "").trim(),
+      profileLink: String(fd.get("profileLink") || "").trim(),
+      tags: String(fd.get("tags") || "").trim(),
+      talentPool: String(fd.get("talentPool") || "").trim(),
+      consentNote: String(fd.get("consentNote") || "").trim(),
+      rtwStatus: String(fd.get("rtwStatus") || "").trim(),
+      cvLink: String(fd.get("cvLink") || String(fd.get("profileLink") || "")).trim(),
       createdAt: nowIso()
     });
 
@@ -835,6 +878,15 @@ function getTenantDataOrRedirect() {
   const data = loadData();
   const jobId = new URLSearchParams(location.search).get("job") || "";
   const job = data.jobs.find(j => j.id === jobId);
+  const jobCard = document.querySelector("[data-apply-job]");
+
+  if (jobCard) {
+    jobCard.innerHTML = job
+      ? `<h1>${escapeHtml(job.title)}</h1>
+         <p>${escapeHtml(job.client || "Company")} • ${escapeHtml(job.location || "-")} • ${escapeHtml(job.employmentType || "Permanent")}</p>
+         <small>Salary: ${escapeHtml(job.salaryRange || "Negotiable")}</small>`
+      : `<h1>Job unavailable</h1><p class="muted">This job link is invalid or no longer active. Please return to the jobs page.</p>`;
+  }
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -854,10 +906,10 @@ function getTenantDataOrRedirect() {
         tenantId,
         name,
         email,
-        phone: String(fd.get("phone") || ""),
-        location: String(fd.get("location") || ""),
+        phone: String(fd.get("phone") || "").trim(),
+        location: String(fd.get("location") || "").trim(),
         stage: "Applied",
-        skills: String(fd.get("skills") || ""),
+        skills: String(fd.get("skills") || "").trim(),
         notes: "Applied via public job link",
         jobId,
         idPassport: "",
@@ -865,12 +917,18 @@ function getTenantDataOrRedirect() {
         workPermit: "",
         beeStatus: "",
         eeCategory: "",
+        cvLink: String(fd.get("cvLink") || "").trim(),
         createdAt: nowIso()
       };
       data.candidates.unshift(candidate);
     } else {
       candidate.stage = "Applied";
       candidate.jobId = jobId;
+      candidate.phone = candidate.phone || String(fd.get("phone") || "").trim();
+      candidate.location = candidate.location || String(fd.get("location") || "").trim();
+      candidate.skills = candidate.skills || String(fd.get("skills") || "").trim();
+      candidate.cvLink = candidate.cvLink || String(fd.get("cvLink") || "").trim();
+      candidate.notes = [candidate.notes, "Applied via public job link"].filter(Boolean).join(" | ");
     }
 
     data.applications.unshift({
@@ -968,6 +1026,166 @@ function getTenantDataOrRedirect() {
     addActivity(data, tenantId, `Application status updated to ${app.status}`);
     saveData(data);
     showFlash("Application updated.", "ok");
+  });
+
+  render();
+})();
+
+/** COMPANIES **/
+(function companiesPage() {
+  const body = document.querySelector("[data-companies-body]");
+  const form = document.querySelector("[data-company-form]");
+  if (!body || !form) return;
+
+  const ctx = getTenantDataOrRedirect();
+  if (!ctx) return;
+  const { data, tenantId } = ctx;
+
+  const tCompanies = () => data.companies.filter(c => c.tenantId === tenantId);
+
+  function render() {
+    const rows = tCompanies();
+    body.innerHTML = rows.length
+      ? rows.map(c => `
+          <tr>
+            <td>${escapeHtml(c.name)}</td>
+            <td>${escapeHtml(c.industry || "-")}</td>
+            <td>${escapeHtml(c.location || "-")}</td>
+            <td>${escapeHtml(c.contact || "-")}</td>
+            <td><span class="badge ${c.status === "Active" ? "ok" : "warn"}">${escapeHtml(c.status || "-")}</span></td>
+            <td class="actions-cell"><button class="btn small danger" data-delete-company="${c.id}">Delete</button></td>
+          </tr>
+        `).join("")
+      : `<tr><td colspan="6" class="muted">No companies added yet.</td></tr>`;
+  }
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const fd = new FormData(form);
+    const name = String(fd.get("name") || "").trim();
+    if (!name) return;
+
+    data.companies.unshift({
+      id: uid(),
+      tenantId,
+      name,
+      industry: String(fd.get("industry") || "").trim(),
+      location: String(fd.get("location") || "").trim(),
+      contact: String(fd.get("contact") || "").trim(),
+      billing: String(fd.get("billing") || "").trim(),
+      status: String(fd.get("status") || "Active").trim(),
+      notes: String(fd.get("notes") || "").trim(),
+      createdAt: nowIso()
+    });
+
+    addActivity(data, tenantId, `Saved company: ${name}`);
+    saveData(data);
+    form.reset();
+    render();
+    showFlash("Company saved.", "ok");
+  });
+
+  body.addEventListener("click", (e) => {
+    const b = e.target.closest("[data-delete-company]");
+    if (!b) return;
+
+    data.companies = data.companies.filter(c => !(c.id === b.dataset.deleteCompany && c.tenantId === tenantId));
+    addActivity(data, tenantId, "Deleted company");
+    saveData(data);
+    render();
+  });
+
+  render();
+})();
+
+/** USERS **/
+(function usersPage() {
+  const body = document.querySelector("[data-users-body]");
+  const form = document.querySelector("[data-user-form]");
+  if (!body || !form) return;
+
+  const ctx = getTenantDataOrRedirect();
+  if (!ctx) return;
+  const { data, tenantId } = ctx;
+
+  const tUsers = () => data.users.filter(u => u.tenantId === tenantId);
+
+  function render() {
+    const rows = tUsers();
+    body.innerHTML = rows.length
+      ? rows.map(u => `
+          <tr>
+            <td>${escapeHtml(u.name)}</td>
+            <td>${escapeHtml(u.email)}</td>
+            <td>${escapeHtml(u.role)}</td>
+            <td><span class="badge ok">Active</span></td>
+            <td class="actions-cell"><button class="btn small danger" data-delete-user="${u.id}">Delete</button></td>
+          </tr>
+        `).join("")
+      : `<tr><td colspan="5" class="muted">No users in this workspace yet.</td></tr>`;
+  }
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const fd = new FormData(form);
+    const name = String(fd.get("name") || "").trim();
+    const email = String(fd.get("email") || "").trim().toLowerCase();
+    const role = String(fd.get("role") || "Recruiter").trim();
+    if (!name || !email) return;
+    if (!ROLES.includes(role)) return showFlash("Invalid role selected.", "danger");
+
+    const exists = data.users.some(u => u.tenantId === tenantId && u.email.toLowerCase() === email);
+    if (exists) return showFlash("User with this email already exists.", "danger");
+
+    const userId = uid();
+    data.users.unshift({ id: userId, tenantId, name, email, role, createdAt: nowIso() });
+
+    const creds = loadCredentials();
+    const existingCredential = creds.find((u) => String(u.email || "").toLowerCase() === email);
+
+    if (!existingCredential) {
+      const tempPassword = `welcome-${Math.random().toString(36).slice(2, 8)}`;
+      creds.push({
+        id: uid(),
+        tenantId,
+        userId,
+        name,
+        email,
+        password: tempPassword,
+        role,
+        createdAt: nowIso()
+      });
+      saveCredentials(creds);
+      showFlash(`User added. Temporary password: ${tempPassword}`, "ok");
+    } else {
+      showFlash("User added.", "ok");
+    }
+
+    addActivity(data, tenantId, `Added user: ${name} (${role})`);
+    saveData(data);
+    form.reset();
+    render();
+  });
+
+  body.addEventListener("click", (e) => {
+    const b = e.target.closest("[data-delete-user]");
+    if (!b) return;
+
+    const user = data.users.find(u => u.id === b.dataset.deleteUser && u.tenantId === tenantId);
+    if (!user) return;
+
+    const auth = getAuth();
+    if (auth && auth.userId === user.id) {
+      showFlash("You cannot remove the currently logged-in user.", "danger");
+      return;
+    }
+
+    data.users = data.users.filter(u => !(u.id === user.id && u.tenantId === tenantId));
+    const creds = loadCredentials().filter((u) => !(u.userId === user.id || String(u.email || "").toLowerCase() === user.email.toLowerCase()));
+    saveCredentials(creds);
+    addActivity(data, tenantId, `Deleted user: ${user.name}`);
+    saveData(data);
+    render();
   });
 
   render();
