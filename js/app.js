@@ -772,7 +772,8 @@ function getTenantDataOrRedirect() {
           `).join("")
         : `<div class="muted small-note">No candidates</div>`;
 
-      col.querySelector("[data-count]")?.textContent = `${list.length} candidate(s)`;
+      const countEl = col.querySelector("[data-count]");
+      if (countEl) countEl.textContent = `${list.length} candidate(s)`;
     });
 
     document.querySelectorAll("[data-card]").forEach(card => {
