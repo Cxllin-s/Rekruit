@@ -257,3 +257,5 @@ button, input, select, textarea{font:inherit}
   color:var(--muted);
   font-size:12px;
 }
+
+.hidden{display:none}
