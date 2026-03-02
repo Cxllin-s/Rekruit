@@ -12,8 +12,14 @@
       <div class="brand"><span class="dot"></span> Rekruit</div>
       <div class="navlinks">
         <a class="chip" data-nav href="dashboard.html">Dashboard</a>
-        <a class="chip" data-nav href="jobs-pipeline.html">Jobs Pipeline</a>
-        <a class="chip" data-nav href="login.html">Logout</a>
+        <a class="chip" data-nav href="companies.html">Companies</a>
+        <a class="chip" data-nav href="candidates.html">Candidates</a>
+        <a class="chip" data-nav href="applications.html">Applications</a>
+        <a class="chip" data-nav href="jobs-pipeline.html">Pipeline</a>
+        <a class="chip" data-nav href="users.html">Users</a>
+        <a class="chip" data-nav href="reports.html">Reports</a>
+        <a class="chip" data-nav href="settings.html">Settings</a>
+        <a class="chip" href="#" data-logout>Logout</a>
       </div>
     </div>
   </div>
@@ -22,86 +28,84 @@
     <div class="section-title">
       <div>
         <h2>Recruiter Dashboard</h2>
-        <p>Snapshot of jobs, candidates, and pipeline performance.</p>
+        <p>Manage jobs, candidates, interviews, and hiring activity from one place.</p>
       </div>
       <div class="row">
-        <button class="btn">+ New Candidate</button>
-        <button class="btn primary">+ Create Job</button>
+        <button class="btn" data-open-candidate-form>+ Quick Candidate</button>
+        <button class="btn primary" data-open-job-form>+ Create Job</button>
       </div>
     </div>
 
     <div class="grid grid-4">
-      <div class="card kpi">
-        <h3>Open Jobs</h3>
-        <div class="num">12</div>
-        <div class="meta">Across all clients</div>
-      </div>
-      <div class="card kpi">
-        <h3>Applications Today</h3>
-        <div class="num">34</div>
-        <div class="meta">New submissions</div>
-      </div>
-      <div class="card kpi">
-        <h3>Interviews Scheduled</h3>
-        <div class="num">7</div>
-        <div class="meta">Next 7 days</div>
-      </div>
-      <div class="card kpi">
-        <h3>Placements This Month</h3>
-        <div class="num">3</div>
-        <div class="meta">Offer accepted</div>
-      </div>
+      <div class="card kpi"><h3>Open Jobs</h3><div class="num" data-kpi="open-jobs">0</div><div class="meta">Currently active</div></div>
+      <div class="card kpi"><h3>Total Jobs</h3><div class="num" data-kpi="total-jobs">0</div><div class="meta">Draft + active + closed</div></div>
+      <div class="card kpi"><h3>Candidates</h3><div class="num" data-kpi="candidates">0</div><div class="meta">In database</div></div>
+      <div class="card kpi"><h3>Placements</h3><div class="num" data-kpi="placements">0</div><div class="meta">Moved to placed stage</div></div>
     </div>
 
-    <div class="section-title">
-      <div>
-        <h2>Recent Jobs</h2>
-        <p>Quick view of active vacancies.</p>
+    <form class="card form hidden" data-job-form>
+      <h1>Create Job</h1>
+      <div class="grid grid-2">
+        <div class="field"><label>Job title</label><input class="input" required name="title" /></div>
+        <div class="field"><label>Client</label><input class="input" required name="client" /></div>
+        <div class="field"><label>Location</label><input class="input" required name="location" /></div>
+        <div class="field"><label>Status</label><select class="input" name="status"><option>Draft</option><option>Active</option><option>On Hold</option><option>Closed</option></select></div>
+        <div class="field"><label>Employment type</label><select class="input" name="employmentType"><option>Permanent</option><option>Contract</option><option>Temporary</option><option>Internship</option></select></div>
+        <div class="field"><label>Salary range</label><input class="input" name="salaryRange" placeholder="R35,000 - R45,000" /></div>
+        <div class="field"><label>Required skills</label><input class="input" name="requiredSkills" placeholder="Excel, IFRS" /></div>
       </div>
-      <input class="input" style="max-width:320px" placeholder="Search jobs…" />
-    </div>
+      <div class="actions"><button class="btn primary" type="submit">Save Job</button></div>
+    </form>
 
+    <form class="card form hidden" data-quick-candidate-form>
+      <h1>Quick Candidate</h1>
+      <div class="grid grid-3">
+        <div class="field"><label>Name</label><input class="input" required name="name" /></div>
+        <div class="field"><label>Email</label><input class="input" required name="email" type="email" /></div>
+        <div class="field"><label>Phone</label><input class="input" name="phone" /></div>
+      </div>
+      <div class="grid grid-3">
+        <div class="field"><label>Location</label><input class="input" required name="location" /></div>
+        <div class="field"><label>Stage</label><select class="input" name="stage"><option>Applied</option><option>Screened</option><option>Interview</option><option>Offer</option><option>Placed</option><option>Rejected</option></select></div>
+        <div class="field"><label>Skills</label><input class="input" name="skills" /></div>
+      </div>
+      <div class="actions"><button class="btn primary" type="submit">Save Candidate</button></div>
+    </form>
+
+    <div class="section-title"><h2>Jobs</h2></div>
     <table class="table">
-      <thead>
-        <tr>
-          <th>Job</th>
-          <th>Client</th>
-          <th>Location</th>
-          <th>Status</th>
-          <th>Applications</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Senior Accountant</td>
-          <td>BluePeak Holdings</td>
-          <td>Johannesburg</td>
-          <td><span class="badge ok">Active</span></td>
-          <td>18</td>
-          <td><a class="btn small" href="jobs-pipeline.html">Open Pipeline</a></td>
-        </tr>
-        <tr>
-          <td>HR Administrator</td>
-          <td>WestCape Logistics</td>
-          <td>Cape Town</td>
-          <td><span class="badge ok">Active</span></td>
-          <td>9</td>
-          <td><a class="btn small" href="jobs-pipeline.html">Open Pipeline</a></td>
-        </tr>
-        <tr>
-          <td>IT Support Technician</td>
-          <td>Karoo Retail Group</td>
-          <td>Remote</td>
-          <td><span class="badge warn">Draft</span></td>
-          <td>0</td>
-          <td><a class="btn small" href="jobs-pipeline.html">Open Pipeline</a></td>
-        </tr>
-      </tbody>
+      <thead><tr><th>Job</th><th>Client</th><th>Location</th><th>Status</th><th>Candidates</th><th></th></tr></thead>
+      <tbody data-jobs-body></tbody>
     </table>
 
-    <div class="footer-note">
-      Next we’ll add: Candidates list + Candidate profile pages.
+    <div class="section-title"><h2>Recent Candidates</h2></div>
+    <table class="table">
+      <thead><tr><th>Name</th><th>Email</th><th>Location</th><th>Stage</th><th>Assigned Job</th></tr></thead>
+      <tbody data-dashboard-candidates-body></tbody>
+    </table>
+
+    <div class="section-title"><h2>Schedule Interview</h2></div>
+    <form class="card form" data-interview-form>
+      <div class="grid grid-3">
+        <div class="field"><label>Candidate</label><select class="input" name="candidateId" required></select></div>
+        <div class="field"><label>Job</label><select class="input" name="jobId"></select></div>
+        <div class="field"><label>Date & Time</label><input class="input" name="when" type="datetime-local" required /></div>
+      </div>
+      <div class="grid grid-2">
+        <div class="field"><label>Mode</label><select class="input" name="mode"><option>Virtual</option><option>On-site</option><option>Phone</option></select></div>
+        <div class="field"><label>Interviewer</label><input class="input" name="interviewer" placeholder="Hiring Manager" /></div>
+      </div>
+      <div class="actions"><button class="btn primary" type="submit">Schedule</button></div>
+    </form>
+
+    <table class="table" style="margin-top:16px">
+      <thead><tr><th>Candidate</th><th>Job</th><th>When</th><th>Mode</th><th>Interviewer</th><th></th></tr></thead>
+      <tbody data-interviews-body></tbody>
+    </table>
+
+    <div class="section-title"><h2>Hiring Activity</h2></div>
+    <div class="card form">
+      <ul class="activity-list" data-activity-body></ul>
     </div>
   </div>
 

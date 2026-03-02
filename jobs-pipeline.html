@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Rekruit — Jobs Pipeline</title>
+  <title>Rekruit — Pipeline</title>
   <link rel="stylesheet" href="css/app.css" />
 </head>
 <body>
@@ -12,8 +12,14 @@
       <div class="brand"><span class="dot"></span> Rekruit</div>
       <div class="navlinks">
         <a class="chip" data-nav href="dashboard.html">Dashboard</a>
-        <a class="chip" data-nav href="jobs-pipeline.html">Jobs Pipeline</a>
-        <a class="chip" data-nav href="login.html">Logout</a>
+        <a class="chip" data-nav href="companies.html">Companies</a>
+        <a class="chip" data-nav href="candidates.html">Candidates</a>
+        <a class="chip" data-nav href="applications.html">Applications</a>
+        <a class="chip" data-nav href="jobs-pipeline.html">Pipeline</a>
+        <a class="chip" data-nav href="users.html">Users</a>
+        <a class="chip" data-nav href="reports.html">Reports</a>
+        <a class="chip" data-nav href="settings.html">Settings</a>
+        <a class="chip" href="#" data-logout>Logout</a>
       </div>
     </div>
   </div>
@@ -21,80 +27,20 @@
   <div class="container">
     <div class="section-title">
       <div>
-        <h2>Senior Accountant — Pipeline</h2>
-        <p>Drag candidates between stages (offline prototype).</p>
+        <h2>Recruitment Pipeline</h2>
+        <p>Drag candidates between stages to update their journey.</p>
       </div>
-      <div class="row">
-        <button class="btn">+ Add Candidate</button>
-        <button class="btn primary">Publish Job</button>
-      </div>
+      <a href="candidates.html" class="btn primary">Manage Candidates</a>
     </div>
 
-    <div class="kanban">
-      <div class="col" data-col>
-        <div class="colhead">
-          <h3>Applied</h3>
-          <div class="count" data-count>0 candidate(s)</div>
-        </div>
-        <div class="dropzone" data-zone>
-          <div class="cardlet" id="c1" data-card>
-            <div class="name">Nthabiseng M.</div>
-            <div class="meta">
-              <span>CT</span><span>R45k</span><span>Excel</span>
-            </div>
-          </div>
-          <div class="cardlet" id="c2" data-card>
-            <div class="name">Providence K.</div>
-            <div class="meta">
-              <span>JHB</span><span>R55k</span><span>IFRS</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col" data-col>
-        <div class="colhead">
-          <h3>Screened</h3>
-          <div class="count" data-count>0 candidate(s)</div>
-        </div>
-        <div class="dropzone" data-zone>
-          <div class="cardlet" id="c3" data-card>
-            <div class="name">Tatenda H.</div>
-            <div class="meta">
-              <span>PTA</span><span>R60k</span><span>Sage</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col" data-col>
-        <div class="colhead">
-          <h3>Interview</h3>
-          <div class="count" data-count>0 candidate(s)</div>
-        </div>
-        <div class="dropzone" data-zone>
-          <div class="cardlet" id="c4" data-card>
-            <div class="name">Chalene S.</div>
-            <div class="meta">
-              <span>Remote</span><span>R50k</span><span>Audit</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col" data-col>
-        <div class="colhead">
-          <h3>Offer</h3>
-          <div class="count" data-count>0 candidate(s)</div>
-        </div>
-        <div class="dropzone" data-zone>
-          <!-- drop here -->
-        </div>
-      </div>
-    </div>
-
-    <div class="footer-note">
-      Next: Candidate profile screen + notes, documents, and actions (schedule interview, send email).
+    <div class="kanban kanban-6">
+      <div class="col" data-col data-stage="Applied"><div class="colhead"><h3>Applied</h3><div class="count" data-count>0</div></div><div class="dropzone" data-zone></div></div>
+      <div class="col" data-col data-stage="Screened"><div class="colhead"><h3>Screened</h3><div class="count" data-count>0</div></div><div class="dropzone" data-zone></div></div>
+      <div class="col" data-col data-stage="Interview 1"><div class="colhead"><h3>Interview 1</h3><div class="count" data-count>0</div></div><div class="dropzone" data-zone></div></div>
+      <div class="col" data-col data-stage="Interview 2"><div class="colhead"><h3>Interview 2</h3><div class="count" data-count>0</div></div><div class="dropzone" data-zone></div></div>
+      <div class="col" data-col data-stage="Offer"><div class="colhead"><h3>Offer</h3><div class="count" data-count>0</div></div><div class="dropzone" data-zone></div></div>
+      <div class="col" data-col data-stage="Placed"><div class="colhead"><h3>Placed</h3><div class="count" data-count>0</div></div><div class="dropzone" data-zone></div></div>
+      <div class="col" data-col data-stage="Rejected"><div class="colhead"><h3>Rejected</h3><div class="count" data-count>0</div></div><div class="dropzone" data-zone></div></div>
     </div>
   </div>
 
