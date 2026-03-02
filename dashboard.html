@@ -12,6 +12,7 @@
       <div class="brand"><span class="dot"></span> Rekruit</div>
       <div class="navlinks">
         <a class="chip" data-nav href="dashboard.html">Dashboard</a>
+        <a class="chip" data-nav href="candidates.html">Candidates</a>
         <a class="chip" data-nav href="jobs-pipeline.html">Jobs Pipeline</a>
         <a class="chip" data-nav href="login.html">Logout</a>
       </div>
@@ -22,87 +23,76 @@
     <div class="section-title">
       <div>
         <h2>Recruiter Dashboard</h2>
-        <p>Snapshot of jobs, candidates, and pipeline performance.</p>
+        <p>Live snapshot of jobs and candidates.</p>
       </div>
       <div class="row">
-        <button class="btn">+ New Candidate</button>
-        <button class="btn primary">+ Create Job</button>
+        <a class="btn" href="candidates.html">+ New Candidate</a>
+        <button class="btn primary" data-open-job-form>+ Create Job</button>
       </div>
     </div>
 
     <div class="grid grid-4">
       <div class="card kpi">
         <h3>Open Jobs</h3>
-        <div class="num">12</div>
+        <div class="num" data-kpi="open-jobs">0</div>
         <div class="meta">Across all clients</div>
       </div>
       <div class="card kpi">
-        <h3>Applications Today</h3>
-        <div class="num">34</div>
-        <div class="meta">New submissions</div>
+        <h3>Total Candidates</h3>
+        <div class="num" data-kpi="candidates">0</div>
+        <div class="meta">In your talent pool</div>
       </div>
       <div class="card kpi">
-        <h3>Interviews Scheduled</h3>
-        <div class="num">7</div>
-        <div class="meta">Next 7 days</div>
+        <h3>Interview Stage</h3>
+        <div class="num" data-kpi="interview">0</div>
+        <div class="meta">Needs scheduling</div>
       </div>
       <div class="card kpi">
-        <h3>Placements This Month</h3>
-        <div class="num">3</div>
-        <div class="meta">Offer accepted</div>
+        <h3>Offers</h3>
+        <div class="num" data-kpi="offer">0</div>
+        <div class="meta">In offer pipeline</div>
       </div>
     </div>
 
     <div class="section-title">
       <div>
-        <h2>Recent Jobs</h2>
-        <p>Quick view of active vacancies.</p>
+        <h2>Jobs</h2>
+        <p>Add or remove jobs for your demo.</p>
       </div>
-      <input class="input" style="max-width:320px" placeholder="Search jobs…" />
     </div>
 
-    <table class="table">
+    <form class="card form hidden" data-job-form>
+      <div class="grid grid-3">
+        <div class="field">
+          <label>Job title</label>
+          <input class="input" required name="title" placeholder="Senior Accountant" />
+        </div>
+        <div class="field">
+          <label>Client</label>
+          <input class="input" required name="client" placeholder="BluePeak Holdings" />
+        </div>
+        <div class="field">
+          <label>Location</label>
+          <input class="input" required name="location" placeholder="Johannesburg" />
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" type="submit">Save Job</button>
+      </div>
+    </form>
+
+    <table class="table" data-jobs-table>
       <thead>
         <tr>
           <th>Job</th>
           <th>Client</th>
           <th>Location</th>
           <th>Status</th>
-          <th>Applications</th>
           <th></th>
         </tr>
       </thead>
-      <tbody>
-        <tr>
-          <td>Senior Accountant</td>
-          <td>BluePeak Holdings</td>
-          <td>Johannesburg</td>
-          <td><span class="badge ok">Active</span></td>
-          <td>18</td>
-          <td><a class="btn small" href="jobs-pipeline.html">Open Pipeline</a></td>
-        </tr>
-        <tr>
-          <td>HR Administrator</td>
-          <td>WestCape Logistics</td>
-          <td>Cape Town</td>
-          <td><span class="badge ok">Active</span></td>
-          <td>9</td>
-          <td><a class="btn small" href="jobs-pipeline.html">Open Pipeline</a></td>
-        </tr>
-        <tr>
-          <td>IT Support Technician</td>
-          <td>Karoo Retail Group</td>
-          <td>Remote</td>
-          <td><span class="badge warn">Draft</span></td>
-          <td>0</td>
-          <td><a class="btn small" href="jobs-pipeline.html">Open Pipeline</a></td>
-        </tr>
-      </tbody>
+      <tbody data-jobs-body></tbody>
     </table>
-
-    <div class="footer-note">
-      Next we’ll add: Candidates list + Candidate profile pages.
-    </div>
   </div>
 
   <script src="js/app.js"></script>
