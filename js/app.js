@@ -848,6 +848,15 @@ function getTenantDataOrRedirect() {
   const data = loadData();
   const jobId = new URLSearchParams(location.search).get("job") || "";
   const job = data.jobs.find(j => j.id === jobId);
+  const jobCard = document.querySelector("[data-apply-job]");
+
+  if (jobCard) {
+    jobCard.innerHTML = job
+      ? `<h1>${escapeHtml(job.title)}</h1>
+         <p>${escapeHtml(job.client || "Company")} • ${escapeHtml(job.location || "-")} • ${escapeHtml(job.employmentType || "Permanent")}</p>
+         <small>Salary: ${escapeHtml(job.salaryRange || "Negotiable")}</small>`
+      : `<h1>Job unavailable</h1><p class="muted">This job link is invalid or no longer active. Please return to the jobs page.</p>`;
+  }
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();
