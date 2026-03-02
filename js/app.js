@@ -104,16 +104,27 @@ function findCredentialByEmail(email) {
 
 /** Auth **/
 function getAuth() {
-  try { return JSON.parse(localStorage.getItem(AUTH_STORAGE_KEY) || "null"); }
+  try {
+    const auth = JSON.parse(localStorage.getItem(AUTH_STORAGE_KEY) || "null");
+    if (!auth) return null;
+    if (auth.expiresAt && Date.now() > auth.expiresAt) {
+      clearAuth();
+      return null;
+    }
+    return auth;
+  }
   catch { return null; }
 }
-function setAuth({ email, tenantId, role, userId }) {
+function setAuth({ email, tenantId, role, userId, remember = false }) {
+  const sessionMs = remember ? 1000 * 60 * 60 * 24 * 30 : 1000 * 60 * 60 * 8;
   localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify({
     email,
     tenantId,
     role,
     userId,
-    loggedInAt: Date.now()
+    remember,
+    loggedInAt: Date.now(),
+    expiresAt: Date.now() + sessionMs
   }));
 }
 function clearAuth() {
@@ -180,6 +191,24 @@ function ensureTenant(data, tenantName) {
     box.style.display = msg ? "block" : "none";
   };
 
+  document.querySelector("[data-forgot-password]")?.addEventListener("click", (e) => {
+    e.preventDefault();
+    setMsg(errorBox, "");
+    const emailInput = form.querySelector('[name="email"]');
+    const email = String((emailInput && emailInput.value) || "").trim().toLowerCase();
+    if (!email) {
+      setMsg(errorBox, "Enter your email first, then click Forgot password.");
+      return;
+    }
+    const account = findCredentialByEmail(email);
+    if (!account) {
+      setMsg(errorBox, "No account found for this email. Please sign up.");
+      return;
+    }
+    setMsg(okBox, `Use your current password for ${email}. Password reset flow will be added with backend auth.`);
+    showFlash("Password reset is not yet enabled in this offline build.", "warn");
+  });
+
   form.addEventListener("submit", (e) => {
     e.preventDefault();
     setMsg(errorBox, "");
@@ -188,6 +217,7 @@ function ensureTenant(data, tenantName) {
     const fd = new FormData(form);
     const email = String(fd.get("email") || "").trim().toLowerCase();
     const password = String(fd.get("password") || "").trim();
+    const remember = String(fd.get("remember") || "") === "on";
 
     if (!email || !password) {
       showFlash("Please enter email and password.", "danger");
@@ -202,7 +232,7 @@ function ensureTenant(data, tenantName) {
       return;
     }
 
-    setAuth({ email: account.email, tenantId: account.tenantId, role: account.role, userId: account.userId });
+    setAuth({ email: account.email, tenantId: account.tenantId, role: account.role, userId: account.userId, remember });
     showFlash("Welcome back.", "ok");
     location.href = "dashboard.html";
   });
