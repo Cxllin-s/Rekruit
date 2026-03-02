@@ -20,6 +20,12 @@
         <a class="chip" data-nav href="reports.html">Reports</a>
         <a class="chip" data-nav href="settings.html">Settings</a>
         <a class="chip" href="#" data-logout>Logout</a>
+<<<<<<< codex/deploy-recruit-hr-site-with-basic-functionality-ootrbk
+=======
+        <a class="chip" data-nav href="candidates.html">Candidates</a>
+        <a class="chip" data-nav href="jobs-pipeline.html">Jobs Pipeline</a>
+        <a class="chip" data-nav href="login.html">Logout</a>
+>>>>>>> main
       </div>
     </div>
   </div>
@@ -32,6 +38,13 @@
       </div>
       <div class="row">
         <button class="btn" data-open-candidate-form>+ Quick Candidate</button>
+<<<<<<< codex/deploy-recruit-hr-site-with-basic-functionality-ootrbk
+=======
+        <p>Live snapshot of jobs and candidates.</p>
+      </div>
+      <div class="row">
+        <a class="btn" href="candidates.html">+ New Candidate</a>
+>>>>>>> main
         <button class="btn primary" data-open-job-form>+ Create Job</button>
       </div>
     </div>
@@ -53,6 +66,7 @@
         <div class="field"><label>Employment type</label><select class="input" name="employmentType"><option>Permanent</option><option>Contract</option><option>Temporary</option><option>Internship</option></select></div>
         <div class="field"><label>Salary range</label><input class="input" name="salaryRange" placeholder="R35,000 - R45,000" /></div>
         <div class="field"><label>Required skills</label><input class="input" name="requiredSkills" placeholder="Excel, IFRS" /></div>
+<<<<<<< codex/deploy-recruit-hr-site-with-basic-functionality-ootrbk
       </div>
       <div class="actions"><button class="btn primary" type="submit">Save Job</button></div>
     </form>
@@ -107,6 +121,120 @@
     <div class="card form">
       <ul class="activity-list" data-activity-body></ul>
     </div>
+=======
+      </div>
+      <div class="actions"><button class="btn primary" type="submit">Save Job</button></div>
+    </form>
+
+    <form class="card form hidden" data-quick-candidate-form>
+      <h1>Quick Candidate</h1>
+      <div class="grid grid-3">
+        <div class="field"><label>Name</label><input class="input" required name="name" /></div>
+        <div class="field"><label>Email</label><input class="input" required name="email" type="email" /></div>
+        <div class="field"><label>Phone</label><input class="input" name="phone" /></div>
+      </div>
+      <div class="grid grid-3">
+        <div class="field"><label>Location</label><input class="input" required name="location" /></div>
+        <div class="field"><label>Stage</label><select class="input" name="stage"><option>Applied</option><option>Screened</option><option>Interview</option><option>Offer</option><option>Placed</option><option>Rejected</option></select></div>
+        <div class="field"><label>Skills</label><input class="input" name="skills" /></div>
+      <div class="card kpi">
+        <h3>Open Jobs</h3>
+        <div class="num" data-kpi="open-jobs">0</div>
+        <div class="meta">Across all clients</div>
+      </div>
+      <div class="card kpi">
+        <h3>Total Candidates</h3>
+        <div class="num" data-kpi="candidates">0</div>
+        <div class="meta">In your talent pool</div>
+      </div>
+      <div class="card kpi">
+        <h3>Interview Stage</h3>
+        <div class="num" data-kpi="interview">0</div>
+        <div class="meta">Needs scheduling</div>
+      </div>
+      <div class="card kpi">
+        <h3>Offers</h3>
+        <div class="num" data-kpi="offer">0</div>
+        <div class="meta">In offer pipeline</div>
+      </div>
+      <div class="actions"><button class="btn primary" type="submit">Save Candidate</button></div>
+    </form>
+
+    <div class="section-title"><h2>Jobs</h2></div>
+    <table class="table">
+      <thead><tr><th>Job</th><th>Client</th><th>Location</th><th>Status</th><th>Candidates</th><th></th></tr></thead>
+      <tbody data-jobs-body></tbody>
+    </table>
+
+    <div class="section-title"><h2>Recent Candidates</h2></div>
+    <table class="table">
+      <thead><tr><th>Name</th><th>Email</th><th>Location</th><th>Stage</th><th>Assigned Job</th></tr></thead>
+      <tbody data-dashboard-candidates-body></tbody>
+    </table>
+
+    <div class="section-title"><h2>Schedule Interview</h2></div>
+    <form class="card form" data-interview-form>
+      <div class="grid grid-3">
+        <div class="field"><label>Candidate</label><select class="input" name="candidateId" required></select></div>
+        <div class="field"><label>Job</label><select class="input" name="jobId"></select></div>
+        <div class="field"><label>Date & Time</label><input class="input" name="when" type="datetime-local" required /></div>
+      </div>
+      <div class="grid grid-2">
+        <div class="field"><label>Mode</label><select class="input" name="mode"><option>Virtual</option><option>On-site</option><option>Phone</option></select></div>
+        <div class="field"><label>Interviewer</label><input class="input" name="interviewer" placeholder="Hiring Manager" /></div>
+      </div>
+      <div class="actions"><button class="btn primary" type="submit">Schedule</button></div>
+    </form>
+
+    <table class="table" style="margin-top:16px">
+      <thead><tr><th>Candidate</th><th>Job</th><th>When</th><th>Mode</th><th>Interviewer</th><th></th></tr></thead>
+      <tbody data-interviews-body></tbody>
+    </table>
+
+    <div class="section-title"><h2>Hiring Activity</h2></div>
+    <div class="card form">
+      <ul class="activity-list" data-activity-body></ul>
+    </div>
+    <div class="section-title">
+      <div>
+        <h2>Jobs</h2>
+        <p>Add or remove jobs for your demo.</p>
+      </div>
+    </div>
+
+    <form class="card form hidden" data-job-form>
+      <div class="grid grid-3">
+        <div class="field">
+          <label>Job title</label>
+          <input class="input" required name="title" placeholder="Senior Accountant" />
+        </div>
+        <div class="field">
+          <label>Client</label>
+          <input class="input" required name="client" placeholder="BluePeak Holdings" />
+        </div>
+        <div class="field">
+          <label>Location</label>
+          <input class="input" required name="location" placeholder="Johannesburg" />
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" type="submit">Save Job</button>
+      </div>
+    </form>
+
+    <table class="table" data-jobs-table>
+      <thead>
+        <tr>
+          <th>Job</th>
+          <th>Client</th>
+          <th>Location</th>
+          <th>Status</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody data-jobs-body></tbody>
+    </table>
+>>>>>>> main
   </div>
 
   <script src="js/app.js"></script>
