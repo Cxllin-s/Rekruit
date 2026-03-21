@@ -12,24 +12,24 @@
     <div class="split">
       <div class="card hero">
         <div class="brand"><span class="dot"></span> Rekruit</div>
-        <h2 style="margin-top:14px;">Create your recruiter workspace account.</h2>
-        <p>Set up your organization and start managing companies, jobs, applications, and placements.</p>
+        <h2 style="margin-top:14px;">Create your recruiter workspace.</h2>
+        <p>Set up your organisation and start managing jobs, candidates, applications, and hiring stages in one place.</p>
 
         <ul>
-          <li>Workspace setup (company/agency)</li>
-          <li>Role-based access (recruiter vs hiring manager)</li>
-          <li>Live job links + application inbox</li>
-          <li>POPIA-ready structure (audit + consent later)</li>
+          <li>Multi-user workspace for your company or agency</li>
+          <li>Role-based access (recruiter, hiring manager, finance/HR)</li>
+          <li>Live job links with a central application inbox</li>
+          <li>POPIA-aligned data handling and audit-friendly activity feed</li>
         </ul>
       </div>
 
       <form class="card form" data-signup-form method="post" novalidate>
         <h1>Create account</h1>
-        <p>Sign up to access the ATS dashboard.</p>
+        <p>Create your workspace and sign in to the dashboard.</p>
 
         <div class="grid grid-2">
           <div class="field">
-            <label for="su-name">Full Name</label>
+            <label for="su-name">Full name</label>
             <input
               id="su-name"
               class="input"
@@ -58,7 +58,7 @@
 
         <div class="grid grid-2">
           <div class="field">
-            <label for="su-company">Company / Agency Name</label>
+            <label for="su-company">Company / Agency name</label>
             <input
               id="su-company"
               class="input"
@@ -68,7 +68,7 @@
               placeholder="e.g. Rekruit Talent (Pty) Ltd"
               autocomplete="organization"
             />
-            <small>Used to create your workspace.</small>
+            <small>This name is used to create your workspace.</small>
           </div>
 
           <div class="field">
@@ -76,11 +76,11 @@
             <select id="su-role" class="input" name="role" required>
               <option>Super Admin</option>
               <option>Company Admin</option>
-              <option>Recruiter</option>
+              <option selected>Recruiter</option>
               <option>Hiring Manager</option>
               <option>Finance / HR</option>
             </select>
-            <small>You can add more users later.</small>
+            <small>You can add additional users after sign-in.</small>
           </div>
         </div>
 
@@ -100,7 +100,7 @@
           </div>
 
           <div class="field">
-            <label for="su-confirm">Confirm Password</label>
+            <label for="su-confirm">Confirm password</label>
             <input
               id="su-confirm"
               class="input"
@@ -118,8 +118,8 @@
           <label class="row" style="align-items:flex-start; gap:10px;">
             <input type="checkbox" required name="agree" style="margin-top:4px;">
             <span>
-              I agree to the <a class="link" href="#" onclick="return false;">Terms</a> and confirm I have a lawful basis to store candidate data (POPIA).
-              <br><small>Full policy controls will be available in Settings.</small>
+              I agree to the <a class="link" href="#" data-open-terms>Terms</a> and confirm I have a lawful basis to store candidate data (POPIA).
+              <br><small>By continuing, you confirm you will only capture and process data you are authorised to use.</small>
             </span>
           </label>
         </div>
@@ -129,8 +129,8 @@
         <div class="msg ok" data-ok style="display:none;"></div>
 
         <div class="actions">
-          <button class="btn primary" type="submit">Create Workspace</button>
-          <a class="btn" href="login.html">Back to Login</a>
+          <button class="btn primary" type="submit">Create workspace</button>
+          <a class="btn" href="login.html">Back to login</a>
         </div>
 
         <small style="display:block; margin-top:10px;">
@@ -140,6 +140,55 @@
     </div>
   </div>
 
+  <!-- Simple Terms modal (no dead links / no “demo” feel) -->
+  <div class="modal hidden" data-terms-modal aria-hidden="true">
+    <div class="modal-backdrop" data-close-terms></div>
+    <div class="modal-card">
+      <div class="row" style="justify-content:space-between; align-items:center; gap:12px;">
+        <h2 style="margin:0;">Terms</h2>
+        <button class="btn small" type="button" data-close-terms>Close</button>
+      </div>
+      <div style="margin-top:10px;">
+        <p class="muted" style="margin-top:0;">
+          This is a short, on-screen summary for client review. Your formal Terms can be added as a dedicated page later.
+        </p>
+        <ul>
+          <li>You are responsible for ensuring you have a lawful basis to collect and process candidate data.</li>
+          <li>Use Rekruit only for legitimate recruitment and employment purposes.</li>
+          <li>Keep login credentials secure and assign roles appropriately.</li>
+          <li>Do not upload sensitive documents unless required for recruitment and handled lawfully.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
   <script defer src="js/app.js"></script>
+
+  <!-- Modal wiring (UI only; does not affect app.js) -->
+  <script>
+    (function () {
+      const modal = document.querySelector('[data-terms-modal]');
+      const openBtn = document.querySelector('[data-open-terms]');
+      const closeEls = document.querySelectorAll('[data-close-terms]');
+
+      function open() {
+        if (!modal) return;
+        modal.classList.remove('hidden');
+        modal.setAttribute('aria-hidden', 'false');
+      }
+      function close() {
+        if (!modal) return;
+        modal.classList.add('hidden');
+        modal.setAttribute('aria-hidden', 'true');
+      }
+
+      openBtn && openBtn.addEventListener('click', (e) => { e.preventDefault(); open(); });
+      closeEls.forEach(el => el.addEventListener('click', (e) => { e.preventDefault(); close(); }));
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') close();
+      });
+    })();
+  </script>
 </body>
 </html>

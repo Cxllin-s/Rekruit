@@ -2,11 +2,18 @@
   --bg:#0b1220;
   --panel:#0f1b33;
   --panel2:#0c162b;
+
+  /* Amanani stone/brown palette */
+  --stone950:#0c0a09;      /* tailwind stone-950 */
+  --stone900:#1c1917;      /* tailwind stone-900 */
+  --amber950:#451a03;      /* tailwind amber-950 */
+  --brand:#f59e0b;         /* tailwind amber-500 */
+  --brand2:#f97316;        /* tailwind orange-500 */
+
   --text:#e7eefc;
   --muted:#a8b4d6;
   --line:rgba(255,255,255,.08);
-  --brand:#4c7dff;
-  --brand2:#6ee7ff;
+
   --danger:#ff5a7a;
   --ok:#32d583;
   --warn:#fdb022;
@@ -20,10 +27,13 @@ html,body{height:100%}
 body{
   margin:0;
   font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+
+  /* Amanani-like premium brown background */
   background:
-    radial-gradient(900px 500px at 15% 0%, rgba(76,125,255,.18), transparent 60%),
-    radial-gradient(900px 500px at 95% 15%, rgba(110,231,255,.14), transparent 60%),
-    linear-gradient(180deg, #070c16, var(--bg));
+    radial-gradient(900px 500px at 15% 0%, rgba(245,158,11,.16), transparent 60%),
+    radial-gradient(900px 520px at 95% 18%, rgba(249,115,22,.12), transparent 60%),
+    radial-gradient(900px 520px at 45% 110%, rgba(244,63,94,.08), transparent 60%),
+    linear-gradient(180deg, #070c16, var(--stone950));
   color:var(--text);
 }
 
@@ -57,7 +67,7 @@ button, input, select, textarea{font:inherit}
   top:0;
   z-index:10;
   backdrop-filter: blur(10px);
-  background: rgba(7,12,22,.55);
+  background: rgba(12,10,9,.55); /* stone-950 tint */
   border-bottom:1px solid var(--line);
 }
 
@@ -78,7 +88,7 @@ button, input, select, textarea{font:inherit}
 .brand .dot{
   width:12px;height:12px;border-radius:999px;
   background: linear-gradient(135deg, var(--brand), var(--brand2));
-  box-shadow:0 0 0 6px rgba(76,125,255,.12);
+  box-shadow:0 0 0 6px rgba(245,158,11,.10);
 }
 
 .navlinks{
@@ -91,7 +101,11 @@ button, input, select, textarea{font:inherit}
   background: rgba(255,255,255,.03);
   color:var(--muted);
 }
-.chip.active{ color:var(--text); border-color: rgba(76,125,255,.35); background: rgba(76,125,255,.12); }
+.chip.active{
+  color:var(--text);
+  border-color: rgba(245,158,11,.40);
+  background: rgba(245,158,11,.12);
+}
 
 .btn{
   border:1px solid var(--line);
@@ -103,8 +117,8 @@ button, input, select, textarea{font:inherit}
 }
 .btn:hover{ background: rgba(255,255,255,.06); }
 .btn.primary{
-  border-color: rgba(76,125,255,.45);
-  background: linear-gradient(135deg, rgba(76,125,255,.26), rgba(110,231,255,.10));
+  border-color: rgba(245,158,11,.45);
+  background: linear-gradient(135deg, rgba(245,158,11,.22), rgba(249,115,22,.10));
 }
 .btn.danger{
   border-color: rgba(255,90,122,.45);
@@ -112,9 +126,7 @@ button, input, select, textarea{font:inherit}
 }
 .btn.small{padding:8px 10px; border-radius:10px; font-size:14px}
 
-.kpi{
-  padding:18px;
-}
+.kpi{ padding:18px; }
 .kpi h3{margin:0 0 6px 0; font-size:14px; color:var(--muted); font-weight:600}
 .kpi .num{font-size:28px; font-weight:800; letter-spacing:.2px}
 .kpi .meta{margin-top:8px; color:var(--muted); font-size:13px}
@@ -149,6 +161,7 @@ button, input, select, textarea{font:inherit}
   background: rgba(255,255,255,.03);
 }
 .table tr:last-child td{border-bottom:none}
+
 .badge{
   font-size:12px;
   padding:6px 10px;
@@ -171,13 +184,34 @@ button, input, select, textarea{font:inherit}
   outline:none;
 }
 .input:focus{
-  border-color: rgba(76,125,255,.5);
-  box-shadow:0 0 0 5px rgba(76,125,255,.12);
+  border-color: rgba(245,158,11,.55);
+  box-shadow:0 0 0 5px rgba(245,158,11,.14);
 }
 
-.form{
-  padding:22px;
+/* --- Selects match theme (no default browser look) --- */
+select.input{
+  -webkit-appearance:none;
+  -moz-appearance:none;
+  appearance:none;
+  padding-right:42px;
+  cursor:pointer;
+
+  background-image:
+    linear-gradient(45deg, transparent 50%, rgba(231,238,252,.85) 50%),
+    linear-gradient(135deg, rgba(231,238,252,.85) 50%, transparent 50%);
+  background-position:
+    calc(100% - 18px) calc(50% - 2px),
+    calc(100% - 12px) calc(50% - 2px);
+  background-size:6px 6px, 6px 6px;
+  background-repeat:no-repeat;
 }
+select.input::-ms-expand{display:none}
+select.input option{
+  background: var(--stone950);
+  color: var(--text);
+}
+
+.form{ padding:22px; }
 .form h1{margin:0 0 6px; font-size:22px}
 .form p{margin:0 0 18px; color:var(--muted)}
 .form .field{margin:12px 0}
@@ -199,9 +233,7 @@ button, input, select, textarea{font:inherit}
 }
 @media(max-width:920px){ .split{grid-template-columns: 1fr} }
 
-.hero{
-  padding:26px;
-}
+.hero{ padding:26px; }
 .hero h2{margin:0 0 10px; font-size:26px}
 .hero p{margin:0; color:var(--muted); line-height:1.55}
 .hero ul{margin:16px 0 0 18px; color:var(--muted)}
@@ -249,9 +281,10 @@ button, input, select, textarea{font:inherit}
 .cardlet .meta{color:var(--muted); font-size:13px; display:flex; gap:10px; flex-wrap:wrap}
 .cardlet .meta span{border:1px solid var(--line); border-radius:999px; padding:4px 8px; background: rgba(255,255,255,.02)}
 .drag-over{
-  outline:2px dashed rgba(76,125,255,.5);
+  outline:2px dashed rgba(245,158,11,.55);
   outline-offset:6px;
 }
+
 .footer-note{
   margin-top:10px;
   color:var(--muted);
@@ -260,6 +293,13 @@ button, input, select, textarea{font:inherit}
 
 .hidden{display:none}
 
+/* Pipeline layout helpers */
+.kanban.kanban-7{grid-template-columns: repeat(7, minmax(220px, 1fr));}
+@media(max-width:1600px){ .kanban.kanban-7{grid-template-columns: repeat(4, minmax(220px, 1fr));} }
+@media(max-width:1200px){ .kanban.kanban-7{grid-template-columns: repeat(2, minmax(220px, 1fr));} }
+@media(max-width:650px){ .kanban.kanban-7{grid-template-columns: 1fr;} }
+
+/* (kept for compatibility if still used somewhere) */
 .kanban.kanban-6{grid-template-columns: repeat(6, minmax(220px, 1fr));}
 @media(max-width:1400px){ .kanban.kanban-6{grid-template-columns: repeat(3, minmax(220px, 1fr));} }
 @media(max-width:900px){ .kanban.kanban-6{grid-template-columns: repeat(2, minmax(220px, 1fr));} }
@@ -268,7 +308,7 @@ button, input, select, textarea{font:inherit}
 .muted{color:var(--muted); text-align:center}
 .small-note{font-size:12px; padding:6px}
 .actions-cell{display:flex; gap:8px; justify-content:flex-end}
-.link{color:#a9d2ff; text-decoration:underline}
+.link{color:#ffd9a6; text-decoration:underline}
 
 .flash{
   position:fixed;
@@ -287,6 +327,7 @@ button, input, select, textarea{font:inherit}
 .flash.show{opacity:1; transform:translateY(0)}
 .flash.ok{border-color: rgba(50,213,131,.35)}
 .flash.danger{border-color: rgba(255,90,122,.45)}
+.flash.warn{border-color: rgba(245,158,11,.45)}
 
 .activity-list{list-style:none; margin:0; padding:0; display:grid; gap:10px}
 .activity-list li{display:flex; justify-content:space-between; gap:10px; padding:10px 12px; border:1px solid var(--line); border-radius:10px; background:rgba(255,255,255,.02)}

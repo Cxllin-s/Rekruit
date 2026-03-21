@@ -1,5 +1,17 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Rekruit — Users & Roles</title><link rel="stylesheet" href="css/app.css"/></head><body>
-<div class="topbar"><div class="nav"><div class="brand"><span class="dot"></span> Rekruit</div><div class="navlinks">
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rekruit — Users & Roles</title>
+  <link rel="stylesheet" href="css/app.css" />
+</head>
+
+<body>
+  <div class="topbar">
+    <div class="nav">
+      <div class="brand"><span class="dot"></span> Rekruit</div>
+      <div class="navlinks">
         <a class="chip" data-nav href="dashboard.html">Dashboard</a>
         <a class="chip" data-nav href="companies.html">Companies</a>
         <a class="chip" data-nav href="candidates.html">Candidates</a>
@@ -9,9 +21,76 @@
         <a class="chip" data-nav href="reports.html">Reports</a>
         <a class="chip" data-nav href="settings.html">Settings</a>
         <a class="chip" href="#" data-logout>Logout</a>
-      </div></div></div>
-<div class="container">
-<div class="section-title"><div><h2>User & Role Management</h2><p>Create system users and set access roles.</p></div></div>
-<form class="card form" data-user-form><div class="grid grid-3"><div class="field"><label>Full name</label><input class="input" name="name" required/></div><div class="field"><label>Email</label><input class="input" name="email" type="email" required/></div><div class="field"><label>Role</label><select class="input" name="role"><option>Super Admin</option><option>Company Admin</option><option>Recruiter</option><option>Hiring Manager</option><option>Finance / HR</option></select></div></div><div class="actions"><button class="btn primary" type="submit">Add User</button></div></form>
-<table class="table" style="margin-top:16px"><thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Status</th><th></th></tr></thead><tbody data-users-body></tbody></table>
-</div><script defer src="js/app.js"></script></body></html>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="section-title">
+      <div>
+        <h2>User & Role Management</h2>
+        <p>Create users and assign roles for workspace access.</p>
+      </div>
+    </div>
+
+    <form class="card form" data-user-form>
+      <h1>Add User</h1>
+      <p>Add a team member to this workspace. If the email doesn’t exist yet, Rekruit will generate a temporary password and show it on-screen.</p>
+
+      <div class="grid grid-3">
+        <div class="field">
+          <label>Full name</label>
+          <input class="input" name="name" required placeholder="e.g. Thando Ndlovu" />
+        </div>
+
+        <div class="field">
+          <label>Email</label>
+          <input class="input" name="email" type="email" required placeholder="name@company.co.za" />
+        </div>
+
+        <div class="field">
+          <label>Role</label>
+          <select class="input" name="role" required>
+            <option>Super Admin</option>
+            <option>Company Admin</option>
+            <option selected>Recruiter</option>
+            <option>Hiring Manager</option>
+            <option>Finance / HR</option>
+          </select>
+          <small>Assign the minimum access required for the user’s responsibilities.</small>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn primary" type="submit">Add User</button>
+      </div>
+    </form>
+
+    <div class="section-title" style="margin-top:16px;">
+      <div>
+        <h2>Workspace Users</h2>
+        <p>View current users and remove access where necessary.</p>
+      </div>
+    </div>
+
+    <table class="table" style="margin-top:10px">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Status</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody data-users-body></tbody>
+    </table>
+
+    <small class="footer-note">
+      Note: You cannot remove the currently logged-in user.
+    </small>
+  </div>
+
+  <script defer src="js/app.js"></script>
+</body>
+</html>

@@ -29,89 +29,57 @@
     <div class="section-title">
       <div>
         <h2>Candidate Database</h2>
-        <p>Store candidates long-term, track compliance, and build talent pools.</p>
+        <p>Store candidates long-term, maintain clean records, and track pipeline progress.</p>
       </div>
       <div class="row" style="gap:10px; flex-wrap:wrap; justify-content:flex-end;">
-        <input class="input" style="max-width:320px" data-candidate-search placeholder="Search name, email, skills, ID/passport…" />
-        <button class="btn" type="button" data-toggle-filters>Filters</button>
+        <input class="input" style="max-width:340px" data-candidate-search placeholder="Search name, email, skills, ID/passport, tags…" />
+        <button class="btn" type="button" data-toggle-filters>Quick Filters</button>
         <a class="btn" href="jobs-pipeline.html">Open Pipeline</a>
       </div>
     </div>
 
-    <!-- Advanced Filters -->
+    <!-- Quick Filters (client-safe helper; search remains the primary filter) -->
     <div class="card form hidden" data-filters-panel>
-      <h1>Advanced Search Filters</h1>
-      <p>Filter by key recruiter criteria (skills, location, salary, availability, tags, last contact).</p>
+      <h1>Quick Filters</h1>
+      <p>Use these to refine what you type into the search box (they don’t change stored data).</p>
 
       <div class="grid grid-3">
         <div class="field">
-          <label>Location</label>
-          <input class="input" name="filterLocation" placeholder="e.g. Cape Town, Gauteng, Remote" />
+          <label>Common skill</label>
+          <button class="btn small" type="button" data-q="Excel">Excel</button>
+          <button class="btn small" type="button" data-q="IFRS">IFRS</button>
+          <button class="btn small" type="button" data-q="Payroll">Payroll</button>
         </div>
         <div class="field">
-          <label>Industry</label>
-          <input class="input" name="filterIndustry" placeholder="e.g. Finance, Mining, Logistics" />
+          <label>Common locations</label>
+          <button class="btn small" type="button" data-q="Cape Town">Cape Town</button>
+          <button class="btn small" type="button" data-q="Gauteng">Gauteng</button>
+          <button class="btn small" type="button" data-q="Remote">Remote</button>
         </div>
         <div class="field">
-          <label>Skills (contains)</label>
-          <input class="input" name="filterSkills" placeholder="e.g. IFRS, Java, Payroll" />
-        </div>
-      </div>
-
-      <div class="grid grid-3">
-        <div class="field">
-          <label>Salary Min (ZAR)</label>
-          <input class="input" name="filterSalaryMin" placeholder="e.g. 25000" />
-        </div>
-        <div class="field">
-          <label>Salary Max (ZAR)</label>
-          <input class="input" name="filterSalaryMax" placeholder="e.g. 60000" />
-        </div>
-        <div class="field">
-          <label>Availability</label>
-          <select class="input" name="filterAvailability">
-            <option value="">Any</option>
-            <option>Immediately</option>
-            <option>2 weeks</option>
-            <option>1 month</option>
-            <option>Negotiable</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="grid grid-3">
-        <div class="field">
-          <label>Tag (contains)</label>
-          <input class="input" name="filterTag" placeholder="e.g. CFO, Mining, React" />
-        </div>
-        <div class="field">
-          <label>Talent Pool</label>
-          <input class="input" name="filterPool" placeholder="e.g. Finance - Cape Town" />
-        </div>
-        <div class="field">
-          <label>Last contact (days)</label>
-          <input class="input" name="filterLastContact" placeholder="e.g. 30" />
+          <label>Pipeline stages</label>
+          <button class="btn small" type="button" data-q="Applied">Applied</button>
+          <button class="btn small" type="button" data-q="Interview 1">Interview 1</button>
+          <button class="btn small" type="button" data-q="Offer">Offer</button>
         </div>
       </div>
 
       <div class="actions">
-        <button class="btn primary" type="button" data-apply-filters>Apply Filters</button>
-        <button class="btn" type="button" data-clear-filters>Clear</button>
+        <button class="btn" type="button" data-clear-search>Clear search</button>
       </div>
 
       <small class="footer-note">
-        Use filters to narrow candidate results before reviewing profiles.
+        Tip: search includes name, email, location, skills, phone, ID/passport, and nationality.
       </small>
     </div>
 
-    <!-- Create Candidate (FULL PROFILE) -->
+    <!-- Create Candidate (FULL PROFILE - compatible with app.js) -->
     <form class="card form" data-candidate-form>
       <h1>Create Candidate</h1>
-      <p>Capture full SA-ready profile: identity, right-to-work, EE/BEE (optional), skills, experience, salary, and attachments.</p>
+      <p>Capture a complete profile for sourcing, screening, and placement tracking.</p>
 
-      <!-- Personal / Contact -->
       <div class="section-title" style="margin-top:8px;">
-        <div><h2>Personal & Contact</h2><p>Core identity + contact details</p></div>
+        <div><h2>Personal & Contact</h2><p>Core identity and contact details</p></div>
       </div>
 
       <div class="grid grid-3">
@@ -135,7 +103,7 @@
           <input class="input" required name="location" placeholder="Cape Town / Gauteng / Remote" />
         </div>
         <div class="field">
-          <label>ID / Passport (SA specific)</label>
+          <label>ID / Passport</label>
           <input class="input" name="idPassport" placeholder="13-digit SA ID or passport" />
         </div>
         <div class="field">
@@ -172,7 +140,6 @@
         </div>
       </div>
 
-      <!-- Professional -->
       <div class="section-title" style="margin-top:12px;">
         <div><h2>Professional Profile</h2><p>Role, experience, salary, availability, skills</p></div>
       </div>
@@ -223,20 +190,29 @@
 
       <div class="grid grid-2">
         <div class="field">
-          <label>Skills (comma-separated / tags)</label>
+          <label>Skills (comma-separated)</label>
           <input class="input" name="skills" placeholder="Excel, IFRS, Payroll, Sage" />
-          <small>Will be tag-based + searchable in the full system.</small>
         </div>
         <div class="field">
           <label>Candidate tags (comma-separated)</label>
           <input class="input" name="tags" placeholder="CFO, Mining, Java, BPO" />
-          <small>Used for rediscovery + talent pools.</small>
         </div>
       </div>
 
-      <!-- ATS Stage + Job assignment -->
+      <div class="grid grid-2">
+        <div class="field">
+          <label>CV link (Drive/Dropbox/URL)</label>
+          <input class="input" name="cvLink" placeholder="https://..." />
+          <small>Use a secure link where you have permission to store and share the document.</small>
+        </div>
+        <div class="field">
+          <label>Talent pool</label>
+          <input class="input" name="talentPool" placeholder="e.g. Finance - Cape Town" />
+        </div>
+      </div>
+
       <div class="section-title" style="margin-top:12px;">
-        <div><h2>ATS & Assignment</h2><p>Pipeline stage + job link</p></div>
+        <div><h2>ATS & Assignment</h2><p>Pipeline stage and job link</p></div>
       </div>
 
       <div class="grid grid-3">
@@ -259,12 +235,11 @@
         </div>
 
         <div class="field">
-          <label>Talent pool</label>
-          <input class="input" name="talentPool" placeholder="e.g. Finance - Cape Town" />
+          <label>Recruiter note (short)</label>
+          <input class="input" name="notes" placeholder="Short recruiter note…" />
         </div>
       </div>
 
-      <!-- Compliance (Optional + POPIA-safe) -->
       <div class="section-title" style="margin-top:12px;">
         <div><h2>Compliance (Optional)</h2><p>Only capture if relevant and lawful (POPIA)</p></div>
       </div>
@@ -307,41 +282,13 @@
 
       <div class="field">
         <label>POPIA consent note (internal)</label>
-        <input class="input" name="consentNote" placeholder="e.g. Candidate consented to data storage on 2026-03-02" />
-        <small>In the full system this becomes a consent record + audit event.</small>
-      </div>
-
-      <!-- Attachments -->
-      <div class="section-title" style="margin-top:12px;">
-        <div><h2>Attachments</h2><p>CVs, certificates, and supporting documents</p></div>
-      </div>
-
-      <div class="grid grid-2">
-        <div class="field">
-          <label>CV upload (PDF/Word)</label>
-          <input class="input" type="file" name="cvFile" accept=".pdf,.doc,.docx" />
-          <small>CV parsing will attach structured work history & education.</small>
-        </div>
-        <div class="field">
-          <label>Certificates (optional)</label>
-          <input class="input" type="file" name="certFiles" multiple accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" />
-          <small>Multiple uploads supported.</small>
-        </div>
-      </div>
-
-      <div class="field">
-        <label>Notes</label>
-        <input class="input" name="notes" placeholder="Short recruiter note…" />
+        <input class="input" name="consentNote" placeholder="e.g. Consent captured on 2026-03-02 via email/WhatsApp/signed form" />
       </div>
 
       <div class="actions">
         <button class="btn primary" type="submit">Save Candidate</button>
-        <small class="footer-note">After saving, open the candidate profile directly from the list below.</small>
+        <small class="footer-note">After saving, open the candidate profile from the list below.</small>
       </div>
-
-      <small class="footer-note">
-        This page is designed for the full Amanani HR integration: multi-tenant, role-based access, audit logging, and compliance.
-      </small>
     </form>
 
     <div class="section-title">
@@ -370,13 +317,29 @@
 
   <script defer src="js/app.js"></script>
   <script>
-    // UI-only toggles (kept tiny). Full filtering logic is wired in JS next.
-    (function(){
+    (function () {
       const btn = document.querySelector('[data-toggle-filters]');
       const panel = document.querySelector('[data-filters-panel]');
-      if(btn && panel){
-        btn.addEventListener('click', ()=> panel.classList.toggle('hidden'));
-      }
+      const search = document.querySelector('[data-candidate-search]');
+
+      if (btn && panel) btn.addEventListener('click', () => panel.classList.toggle('hidden'));
+
+      // Quick filter buttons append to the search box (works with your app.js search filtering)
+      document.querySelectorAll('[data-filters-panel] [data-q]').forEach(b => {
+        b.addEventListener('click', () => {
+          if (!search) return;
+          const q = b.getAttribute('data-q') || '';
+          const current = (search.value || '').trim();
+          search.value = current ? (current + ' ' + q) : q;
+          search.dispatchEvent(new Event('input', { bubbles: true }));
+        });
+      });
+
+      document.querySelector('[data-clear-search]')?.addEventListener('click', () => {
+        if (!search) return;
+        search.value = '';
+        search.dispatchEvent(new Event('input', { bubbles: true }));
+      });
     })();
   </script>
 </body>

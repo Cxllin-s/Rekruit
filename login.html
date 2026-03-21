@@ -20,7 +20,7 @@
           <li>Long-term talent pool database</li>
           <li>Live job links (no email applications)</li>
           <li>Drag & drop pipeline stages</li>
-          <li>POPIA-ready audit trails & access control</li>
+          <li>Audit-friendly activity feed and role access</li>
         </ul>
 
         <div style="margin-top:16px;">
@@ -30,7 +30,7 @@
         </div>
       </div>
 
-      <form class="card form" data-login-form="true" method="post" novalidate>
+      <form class="card form" data-login-form method="post" novalidate>
         <h1>Sign in</h1>
         <p>Use your recruiter account to continue.</p>
 
@@ -67,8 +67,9 @@
             <small>Remember me</small>
           </label>
 
-          <a class="link" href="#" onclick="return false;" data-forgot-password>
-            Forgot password?
+          <!-- Keep data-forgot-password for app.js compatibility, but intercept to show client-safe help -->
+          <a class="link" href="#" data-forgot-password data-open-password-help>
+            Password help
           </a>
         </div>
 
@@ -82,13 +83,66 @@
         </div>
 
         <small style="display:block; margin-top:10px;">
-          By signing in you agree to workspace policies and POPIA data handling requirements.
+          By signing in, you confirm you will process candidate data lawfully and in line with POPIA.
         </small>
       </form>
 
     </div>
   </div>
 
+  <!-- Client-safe password help modal (does not change auth logic) -->
+  <div class="modal hidden" data-passhelp-modal aria-hidden="true">
+    <div class="modal-backdrop" data-close-passhelp></div>
+    <div class="modal-card">
+      <div class="row" style="justify-content:space-between; align-items:center; gap:12px;">
+        <h2 style="margin:0;">Password help</h2>
+        <button class="btn small" type="button" data-close-passhelp>Close</button>
+      </div>
+
+      <div style="margin-top:10px;">
+        <p class="muted" style="margin-top:0;">
+          If you can’t sign in, confirm you’re using the correct workspace email and password.
+          If your company admin needs to reset access, they can create a new temporary password in <b>Users</b>.
+        </p>
+        <ul>
+          <li>Check Caps Lock and keyboard layout</li>
+          <li>Try logging in from the same browser used to create the account (for this demo build)</li>
+          <li>If you’re an admin, use <b>Users</b> to add a user and generate a temporary password</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
   <script defer src="js/app.js"></script>
+
+  <!-- Modal wiring; also prevents the unfinished reset messaging from app.js -->
+  <script>
+    (function () {
+      const modal = document.querySelector('[data-passhelp-modal]');
+      const open = document.querySelector('[data-open-password-help]');
+      const closeEls = document.querySelectorAll('[data-close-passhelp]');
+
+      function show() {
+        if (!modal) return;
+        modal.classList.remove('hidden');
+        modal.setAttribute('aria-hidden', 'false');
+      }
+      function hide() {
+        if (!modal) return;
+        modal.classList.add('hidden');
+        modal.setAttribute('aria-hidden', 'true');
+      }
+
+      // intercept click before app.js forgot-password handler shows "not enabled" messaging
+      open && open.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        show();
+      }, true);
+
+      closeEls.forEach(el => el.addEventListener('click', (e) => { e.preventDefault(); hide(); }));
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') hide(); });
+    })();
+  </script>
 </body>
 </html>
